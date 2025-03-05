@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-parcelize") //Added to Parcelize, by serializing and de-serializing
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -37,24 +38,40 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
 dependencies {
+    //Glide
+    implementation(libs.glide.v4142)
+    ksp (libs.ksp)
+
+    //Constraint Layout
+    implementation(libs.androidx.constraintlayout)
+
+    //RecyclerView
+    implementation(libs.androidx.recyclerview)
+    // For control over item selection of both touch and mouse driven selection
+    implementation(libs.androidx.recyclerview.selection)
+
+    //Fragment
+    implementation(libs.androidx.fragment.ktx)
+
     //Navigation
-    implementation("androidx.navigation:navigation-compose:2.8.8")
+    implementation(libs.androidx.navigation.compose)
 
     //Compose ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     //Network Calls
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation(libs.retrofit)
 
     //Mapping JSON files to Kotlin Objects
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(libs.converter.gson)
 
     //Image loading
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coil.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -64,6 +81,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.appcompat)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

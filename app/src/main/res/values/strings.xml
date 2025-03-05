@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Modulus-Labs-Dev-Test</string>
+    <string name="pokemon_name_text">Pokemon Name</string>
+    <string name="search_bar_label">Search Pokemon Name</string>
+    <string name="search_button_label">Search Button</string>
+    <string name="error_text">Error</string>
 </resources>

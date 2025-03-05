@@ -1,4 +1,4 @@
-package com.example.modulus_labs_dev_test.api.model
+package com.example.modulus_labs_dev_test.api.model.pokemonlist
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -11,7 +11,3 @@ data class PokemonResponse( //Needed to be set up to adhere to the JSON list sou
     val previous: String?,
     val results: @RawValue List<PokemonResult>
 ): Parcelable
-
-
-//data class PokemonResponse(val pokemonList : List<Pokemon>)
-//the entire JSON list from the URL, stored in the Category list

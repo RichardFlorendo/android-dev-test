@@ -1,52 +1,82 @@
 package com.example.modulus_labs_dev_test.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.modulus_labs_dev_test.api.model.PokemonResponse
-import com.example.modulus_labs_dev_test.api.model.PokemonResult
-import com.example.modulus_labs_dev_test.api.pokemonService
+import com.example.modulus_labs_dev_test.api.model.PokemonService
+import com.example.modulus_labs_dev_test.repository.PokemonRepository
+import com.example.modulus_labs_dev_test.viewmodel.recyclerview.PokemonRecyclerItem
 import kotlinx.coroutines.launch
+import java.util.Locale
 
-class MainViewModel : ViewModel() {
+class MainViewModel(service: PokemonService) : ViewModel() {
+    private val repository = PokemonRepository(service)
 
-    private val _pokemonState = mutableStateOf(PokemonState()) //checks the states of values on PokemonScreen
-    val pokemonState: State<PokemonState> = _pokemonState //updates the state when data is gotten
+    private val _searchedPokemon = MutableLiveData<PokemonRecyclerItem?>()
+    val searchedPokemon: LiveData<PokemonRecyclerItem?> = _searchedPokemon
 
-    init { //Automatically starts everytime MainViewModel is loaded in PokemonScreen
-        fetchPokemon()
-        Log.d("INIT", "INIT")
-    }
+    private val _pokemonState = MutableLiveData<PokemonState>()
+    val pokemonState: LiveData<PokemonState> = _pokemonState
 
-    private fun fetchPokemon(){
-        viewModelScope.launch {// launches a coroutine (suspend functions or asynchronous)
-            try { //best oractice for internet GET and PUSH
-                Log.d("API_CALL", "Fetching Pokémon data...")
-                val response = pokemonService.getPokemon() //calling the suspend function for internet gotten data
-                Log.d("API_RESPONSE", "Received: $response")
-                Log.d("RESPONSE2", response.toString())
+    private var _allPokemonList: List<PokemonRecyclerItem> = emptyList() // Store all Pokémon
 
-                _pokemonState.value = _pokemonState.value.copy( //"Get the current state and change the states"
-                    list = response.results, //populates list
-                    loading = false, //not loading
-                    error = null //no error
+    data class PokemonState(
+        val loading: Boolean = false,
+        val error: String? = null,
+        val list: List<PokemonRecyclerItem> = emptyList()
+    )
+
+    fun fetchPokemon() {
+        viewModelScope.launch{
+            _pokemonState.value = PokemonState(loading = true)
+
+            try {
+                val pokemonList = repository.fetchPokemon()
+                // Fetch images for each Pokémon
+                val pokemonItems = pokemonList.map { pokemon ->
+                    val imageUrl = repository.fetchPokemonImage(pokemon.url)
+                    Log.d("DEBUG_VIEWMODEL", "Creating PokemonRecyclerItem: Name=${pokemon.name}, Image=${imageUrl}")
+
+                    PokemonRecyclerItem(pokemon.name, imageUrl)
+                }
+
+                _allPokemonList = pokemonItems // Store original list
+
+                _pokemonState.value = PokemonState(
+                    loading = false,
+                    error = null,
+                    list = pokemonItems
                 )
-            }
-            catch (e: Exception){
-                Log.e("API_ERROR", "Error fetching Pokémon", e)
-                _pokemonState.value = _pokemonState.value.copy(
-                    loading = false, //not loading anymore, but with error
-                    error = "Error fetching Pokemon ${e.message}"
+            } catch (e: Exception) {
+                _pokemonState.value = PokemonState(
+                    loading = false,
+                    error = e.message
                 )
             }
         }
     }
 
-    data class PokemonState( //contains loading status, if list is not empty, and if there is error
-        val loading: Boolean = true,
-        val list: List<PokemonResult> = emptyList(),
-        val error: String? = null
-    )
+    fun searchPokemon(name: String) {
+        viewModelScope.launch {
+            try {
+                val details = repository.searchPokemonByName(name)
+                details?.let { it ->
+                    _searchedPokemon.value = PokemonRecyclerItem(
+                        pokemonName = it.name.replaceFirstChar {
+                            if (it.isLowerCase()) it.titlecase(
+                                Locale.getDefault()
+                            ) else it.toString()
+                        },
+                        pokemonImage = it.sprites.imageUrl ?: ""
+                    )
+                } ?: run {
+                    _searchedPokemon.value = null
+                }
+            } catch (e: Exception) {
+                _searchedPokemon.value = null
+            }
+        }
+    }
 }
