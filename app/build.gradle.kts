@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-parcelize") //Added to Parcelize, by serializing and de-serializing
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -45,6 +46,7 @@ android {
 dependencies {
     //Glide
     implementation(libs.glide.v4142)
+    implementation(libs.androidx.navigation.fragment)
     ksp (libs.ksp)
 
     //Constraint Layout

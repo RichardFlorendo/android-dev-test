@@ -12,11 +12,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.modulus_labs_dev_test.R
+import com.example.modulus_labs_dev_test.api.model.PokemonService
 import com.example.modulus_labs_dev_test.viewmodel.PokemonDetailViewModel
+import com.example.modulus_labs_dev_test.viewmodel.PokemonDetailViewModelFactory
 import java.util.Locale
 
 class PokemonDetailFragment : Fragment(R.layout.layout_fragment_pokemon_details) {
-    private val viewModel: PokemonDetailViewModel by viewModels()
+    private val viewModel: PokemonDetailViewModel by viewModels{
+        PokemonDetailViewModelFactory(PokemonService.create())
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -25,23 +29,19 @@ class PokemonDetailFragment : Fragment(R.layout.layout_fragment_pokemon_details)
         val pokemonDetailsText = view.findViewById<TextView>(R.id.pokemonDetails_TV)
 
         val pokemonName = arguments?.getString("pokemonName") ?: return
-//        viewModel.fetchPokemonDetails(pokemonName)
+        viewModel.fetchPokemonDetails(pokemonName)
 
         viewModel.pokemonDetail.observe(viewLifecycleOwner) { details ->
             details?.let {
-//                Glide.with(requireContext()).load(it.sprite).into(pokemonImage)
-                pokemonNameText.text = it.name.replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(
-                        Locale.getDefault()
-                    ) else it.toString()
+                val spriteUrl = it.sprites.imageUrl // Correct reference to the sprite
+                Glide.with(requireContext()).load(spriteUrl).into(pokemonImage)
+
+                pokemonNameText.text = it.name.replaceFirstChar { char ->
+                    if (char.isLowerCase()) char.titlecase(Locale.getDefault()) else char.toString()
                 }
+
                 pokemonDetailsText.text = buildString {
-                    append("Height: ")
-                    append(it.height)
-                    append("\t Weight: ")
-                    append(it.weight)
-                    append(" \t Base XP: ")
-                    append(it.baseExperience)
+                    append("Height: ${it.height} \nWeight: ${it.weight} \nBase XP: ${it.baseExperience}")
                 }
             }
         }

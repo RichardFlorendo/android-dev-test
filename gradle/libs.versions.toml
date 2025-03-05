@@ -19,6 +19,7 @@ recyclerview = "1.4.0"
 recyclerviewSelection = "1.1.0"
 retrofit = "2.9.0"
 appcompat = "1.7.0"
+navigationFragment = "2.8.8"
 
 [libraries]
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
@@ -49,6 +50,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 ksp = { module = "com.github.bumptech.glide:ksp", version.ref = "glideVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

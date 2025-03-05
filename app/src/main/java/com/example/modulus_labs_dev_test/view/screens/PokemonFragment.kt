@@ -7,6 +7,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.modulus_labs_dev_test.R
@@ -26,10 +28,11 @@ class PokemonFragment: Fragment(R.layout.layout_fragment_pokemon_screen){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val navController = Navigation.findNavController(view)
+
         val loadingPanel = view.findViewById<View>(R.id.loadingPanel)
         val errorTextView = view.findViewById<TextView>(R.id.error_TV)
         val recyclerView = view.findViewById<RecyclerView>(R.id.pokemon_list_RV)
-
         val searchEditText = view.findViewById<TextView>(R.id.search_bar_ET)
         val searchButton = view.findViewById<Button>(R.id.search_bar_BT)
 
@@ -41,9 +44,11 @@ class PokemonFragment: Fragment(R.layout.layout_fragment_pokemon_screen){
         }
 
         // Set up RecyclerView
-        adapter = PokemonAdapter(emptyList()){
-            // Handle click (you can navigate to details fragment here)
+        adapter = PokemonAdapter(emptyList()) { selectedPokemon ->
+            val action = PokemonFragmentDirections.actionPokemonFragmentToPokemonDetailFragment(selectedPokemon.pokemonName)
+            navController.navigate(action)
         }
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
