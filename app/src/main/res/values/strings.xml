@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Modulus-Labs-Dev-Test</string>
+    <string name="pokemon_name_text">Pokemon Name</string>
+    <string name="search_bar_label">Search Pokemon Name</string>
+    <string name="search_button_label">Search Button</string>
+    <string name="error_text">Error</string>
+    <string name="previous_button_label">Previous</string>
+    <string name="next_button_label">Next</string>
+</resources>
