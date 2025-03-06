@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.modulus_labs_dev_test.R
@@ -26,7 +25,7 @@ class PokemonAdapter(
 
         // Load image using Glide
         Glide.with(holder.itemView.context)
-            .load(pokemonItem.pokemonImage?.takeIf { it.isNotEmpty() })
+            .load(pokemonItem.pokemonImage.takeIf { it.isNotEmpty() })
             .placeholder(R.drawable.baseline_image_24) // Set a placeholder while loading
             .error(R.drawable.baseline_broken_image_24) // Set an error image if load fails
             .into(holder.pokemonImage)
