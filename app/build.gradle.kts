@@ -1,3 +1,12 @@
+import java.util.Properties
+
+// Read from local.properties
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -17,6 +26,10 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+
+        // Add POKEAPI_BASE_URL from local.properties to BuildConfig
+        val pokeApiBaseUrl: String = localProperties["POKEAPI_BASE_URL"] as String
+        buildConfigField("String", "POKEAPI_BASE_URL", "\"$pokeApiBaseUrl\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,10 +53,23 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        buildConfig = true
     }
 }
 
 dependencies {
+    // JUnit for Unit Testing
+    testImplementation(libs.junit)
+
+    // MockK for mocking dependencies
+    testImplementation(libs.mockk)
+
+    // Coroutines Testing
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // LiveData Testing
+    testImplementation(libs.androidx.core.testing)
+
     //Glide
     implementation(libs.glide.v4142)
     implementation(libs.androidx.navigation.fragment)

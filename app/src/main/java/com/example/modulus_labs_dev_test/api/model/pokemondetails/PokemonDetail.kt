@@ -8,7 +8,6 @@ data class PokemonDetail (
     @SerializedName("base_experience") val baseExperience: Int,
     val height: Int,
     val weight: Int,
-//    @SerializedName("sprites") val sprites: Sprites
     val sprites: Sprites
 )
 
