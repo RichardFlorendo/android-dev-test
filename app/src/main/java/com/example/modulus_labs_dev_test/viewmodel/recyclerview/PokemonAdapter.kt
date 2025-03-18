@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.example.modulus_labs_dev_test.R
 
 class PokemonAdapter(
@@ -22,13 +22,16 @@ class PokemonAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val pokemonItem = pokemonList[position]
         holder.pokemonName.text = pokemonItem.pokemonName
+            .split(" ") //Split by spaces
+            .joinToString(" ") { it.replaceFirstChar { char -> char.uppercaseChar() } } //Capitalize each word
 
-        // Load image using Glide
-        Glide.with(holder.itemView.context)
-            .load(pokemonItem.pokemonImage.takeIf { it.isNotEmpty() })
-            .placeholder(R.drawable.baseline_image_24) // Set a placeholder while loading
-            .error(R.drawable.baseline_broken_image_24) // Set an error image if load fails
-            .into(holder.pokemonImage)
+        //Load image using Coil instead of Glide
+        holder.pokemonImage.load(pokemonItem.pokemonImage.takeIf { it.isNotEmpty() }) {
+            placeholder(R.drawable.baseline_image_24) //Show placeholder while loading
+            error(R.drawable.baseline_broken_image_24) //Show error image if load fails
+            crossfade(true)
+        }
+
 
         holder.itemView.setOnClickListener {
             onItemClick(pokemonItem)
@@ -39,7 +42,7 @@ class PokemonAdapter(
         return pokemonList.size
     }
 
-    // Function to update data dynamically
+    //Function to update data dynamically
     fun updatePokemonList(newList: List<PokemonRecyclerItem>) {
         pokemonList = newList
         notifyDataSetChanged()

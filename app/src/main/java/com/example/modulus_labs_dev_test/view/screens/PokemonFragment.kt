@@ -16,6 +16,8 @@ import com.example.modulus_labs_dev_test.api.model.PokemonService
 import com.example.modulus_labs_dev_test.viewmodel.MainViewModel
 import com.example.modulus_labs_dev_test.viewmodel.MainViewModelFactory
 import com.example.modulus_labs_dev_test.viewmodel.recyclerview.PokemonAdapter
+import androidx.navigation.findNavController
+import com.example.modulus_labs_dev_test.databinding.LayoutFragmentPokemonScreenBinding
 
 class PokemonFragment: Fragment(R.layout.layout_fragment_pokemon_screen){
 
@@ -27,20 +29,23 @@ class PokemonFragment: Fragment(R.layout.layout_fragment_pokemon_screen){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navController = Navigation.findNavController(view)
+        val navController = view.findNavController()
 
-        val loadingPanel = view.findViewById<View>(R.id.loadingPanel)
-        val errorTextView = view.findViewById<TextView>(R.id.error_TV)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.pokemon_list_RV)
+        //Used View binding for XML elements
+        val binding = LayoutFragmentPokemonScreenBinding.bind(view)
 
-        val searchEditText = view.findViewById<TextView>(R.id.search_bar_ET)
-        val searchButton = view.findViewById<Button>(R.id.search_bar_BT)
+        val loadingPanel = binding.loadingPanel
+        val errorTextView = binding.errorTV
+        val recyclerView = binding.pokemonListRV
 
-        val navigationButtonsLayout = view.findViewById<LinearLayout>(R.id.navigation_buttons_layout)
-        val previousButton = view.findViewById<Button>(R.id.pokemon_previous_BT)
-        val nextButton = view.findViewById<Button>(R.id.pokemon_next_BT)
+        val searchEditText = binding.searchBarET
+        val searchButton = binding.searchBarBT
 
-        // Set up RecyclerView
+        val navigationButtonsLayout = binding.navigationButtonsLayout
+        val previousButton = binding.pokemonPreviousBT
+        val nextButton = binding.pokemonNextBT
+
+        //Set up RecyclerView
         adapter = PokemonAdapter(emptyList()) { selectedPokemon ->
             val action = PokemonFragmentDirections.actionPokemonFragmentToPokemonDetailFragment(selectedPokemon.pokemonName)
             navController.navigate(action)
@@ -56,7 +61,7 @@ class PokemonFragment: Fragment(R.layout.layout_fragment_pokemon_screen){
             }
         }
 
-        // Observe the LiveData and update the RecyclerView dynamically
+        //Observe the LiveData and update the RecyclerView dynamically
         viewModel.searchedPokemon.observe(viewLifecycleOwner) { pokemon ->
             pokemon?.let {
                 adapter.updatePokemonList(listOf(it)) // Show only the searched Pokémon
@@ -95,10 +100,10 @@ class PokemonFragment: Fragment(R.layout.layout_fragment_pokemon_screen){
                     loadingPanel.visibility = View.GONE
                     errorTextView.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
-                    // Update RecyclerView Adapter with new Pokémon list
+                    //Update RecyclerView Adapter with new Pokémon list
                     adapter.updatePokemonList(viewState.list)
 
-                    // Show navigation buttons only if there are more pages
+                    //Show navigation buttons only if there are more pages
                     if (viewModel.canNavigateNext() || viewModel.canNavigatePrevious()) {
                         navigationButtonsLayout.visibility = View.VISIBLE
                         previousButton.visibility = if (viewModel.canNavigatePrevious()) View.VISIBLE else View.GONE

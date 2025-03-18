@@ -16,8 +16,8 @@ class PokemonRepository(private val service: PokemonService) {
     suspend fun fetchPokemonImage(name: String): String {
         return try {
             val details = service.getPokemonDetails(name)
-            details.sprites.imageUrl ?: ""
-        } catch (e: Exception) {
+            details.sprites.imageUrl.orEmpty()
+        } catch (_: Exception) {
             ""
         }
     }

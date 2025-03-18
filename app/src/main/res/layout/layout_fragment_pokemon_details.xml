@@ -10,21 +10,36 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="32dp"
+        android:contentDescription="@string/pokemon_image_desc"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/pokemonID_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        android:text="@string/pokemon_detail_id"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pokemonImage_IV"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"/>
 
     <TextView
         android:id="@+id/pokemonName_TV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="50sp"
+        android:textSize="40sp"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/pokemonImage_IV"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/pokemon_detail_name"
+        app:layout_constraintTop_toBottomOf="@id/pokemonID_TV"
+        app:layout_constraintStart_toEndOf="@id/pokemonImage_IV"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"/>
 
     <TextView
         android:id="@+id/pokemonDetails_TV"
@@ -32,7 +47,7 @@
         android:layout_height="wrap_content"
         android:textSize="25sp"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/pokemonName_TV"
+        app:layout_constraintTop_toBottomOf="@id/pokemonImage_IV"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />

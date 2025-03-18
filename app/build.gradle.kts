@@ -58,22 +58,20 @@ android {
 }
 
 dependencies {
-    // JUnit for Unit Testing
+    //JUnit for Unit Testing
     testImplementation(libs.junit)
 
-    // MockK for mocking dependencies
+    //MockK for mocking dependencies
     testImplementation(libs.mockk)
 
-    // Coroutines Testing
+    //Coroutines Testing
     testImplementation(libs.kotlinx.coroutines.test)
 
-    // LiveData Testing
+    //LiveData Testing
     testImplementation(libs.androidx.core.testing)
 
-    //Glide
-    implementation(libs.glide.v4142)
+    //Navigation
     implementation(libs.androidx.navigation.fragment)
-    ksp (libs.ksp)
 
     //Constraint Layout
     implementation(libs.androidx.constraintlayout)
@@ -85,9 +83,6 @@ dependencies {
 
     //Fragment
     implementation(libs.androidx.fragment.ktx)
-
-    //Navigation
-    implementation(libs.androidx.navigation.compose)
 
     //Compose ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.compose)

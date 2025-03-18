@@ -93,7 +93,7 @@ class MainViewModel(service: PokemonService,
                         pokemonImage = details.sprites.imageUrl ?: ""
                     )
                 )
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 _searchedPokemon.postValue(null)
             }
         }
