@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/pokemonFragment"
-        android:name="com.example.modulus_labs_dev_test.view.screens.PokemonFragment"
+        android:name="com.example.pokedex_app.view.screens.PokemonFragment"
         android:label="PokemonFragment" >
         <action
             android:id="@+id/action_pokemonFragment_to_pokemonDetailFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/pokemonDetailFragment"
-        android:name="com.example.modulus_labs_dev_test.view.screens.PokemonDetailFragment"
+        android:name="com.example.pokedex_app.view.screens.PokemonDetailFragment"
         android:label="PokemonDetailFragment">
     <argument
         android:name="pokemonName"

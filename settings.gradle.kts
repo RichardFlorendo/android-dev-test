@@ -20,6 +20,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Modulus-Labs-Dev-Test"
+rootProject.name = "Pokedex_App"
 include(":app")
  

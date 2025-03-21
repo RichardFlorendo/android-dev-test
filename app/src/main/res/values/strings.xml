@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Modulus-Labs-Dev-Test</string>
+    <string name="app_name">Pokedex_App</string>
 
     <string name="pokemon_name_text">Pokemon Name</string>
     <string name="pokemon_id">0000</string>

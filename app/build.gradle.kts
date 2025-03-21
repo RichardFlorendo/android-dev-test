@@ -12,16 +12,16 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-parcelize") //Added to Parcelize, by serializing and de-serializing
-    id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp")
 }
 
 android {
-    namespace = "com.example.modulus_labs_dev_test"
+    namespace = "com.example.pokedex_app"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.modulus_labs_dev_test"
+        applicationId = "com.example.pokedex_app"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -58,6 +58,11 @@ android {
 }
 
 dependencies {
+    //Room Database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
     //JUnit for Unit Testing
     testImplementation(libs.junit)
 
