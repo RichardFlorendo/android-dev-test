@@ -1,13 +1,8 @@
 package com.example.pokedex_app.api.model.pokemonlist
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
-
-@Parcelize
-data class PokemonResponse( //Needed to be set up to adhere to the JSON list source
+data class PokemonResponse(
     val count: Int,
     val next: String?,
     val previous: String?,
-    val results: @RawValue List<PokemonResult>
-): Parcelable
+    val results: List<PokemonResult>
+)

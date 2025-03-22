@@ -2,7 +2,7 @@ package com.example.pokedex_app.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.pokedex_app.api.model.PokemonService
+import com.example.pokedex_app.api.PokemonService
 
 class MainViewModelFactory(private val service: PokemonService) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

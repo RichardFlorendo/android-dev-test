@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import coil.ImageLoader
 import coil.request.ImageRequest
 import com.example.pokedex_app.R
-import com.example.pokedex_app.api.model.PokemonService
+import com.example.pokedex_app.api.PokemonService
 import com.example.pokedex_app.databinding.LayoutFragmentPokemonDetailsBinding
 import com.example.pokedex_app.viewmodel.PokemonDetailViewModel
 import com.example.pokedex_app.viewmodel.PokemonDetailViewModelFactory

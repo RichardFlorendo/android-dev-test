@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokedex_app.R
-import com.example.pokedex_app.api.model.PokemonService
+import com.example.pokedex_app.api.PokemonService
 import com.example.pokedex_app.viewmodel.MainViewModel
 import com.example.pokedex_app.viewmodel.MainViewModelFactory
 import com.example.pokedex_app.viewmodel.recyclerview.PokemonAdapter
@@ -42,7 +42,7 @@ class PokemonFragment: Fragment(R.layout.layout_fragment_pokemon_screen){
 
         //Set up RecyclerView
         adapter = PokemonAdapter(emptyList()) { selectedPokemon ->
-            val action = PokemonFragmentDirections.actionPokemonFragmentToPokemonDetailFragment(selectedPokemon.pokemonName)
+            val action = PokemonFragmentDirections.actionPokemonFragmentToPokemonDetailFragment(selectedPokemon.name)
             navController.navigate(action)
         }
 

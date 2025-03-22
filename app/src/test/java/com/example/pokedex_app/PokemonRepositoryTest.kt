@@ -1,9 +1,9 @@
 package com.example.pokedex_app
 
-import com.example.pokedex_app.api.model.PokemonService
+import com.example.pokedex_app.api.PokemonService
 import com.example.pokedex_app.api.model.pokemonlist.PokemonResponse
 import com.example.pokedex_app.api.model.pokemonlist.PokemonResult
-import com.example.pokedex_app.repository.PokemonRepository
+import com.example.pokedex_app.api.model.pokemondetails.PokemonRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

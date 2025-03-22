@@ -3,12 +3,12 @@ package com.example.pokedex_app
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.example.pokedex_app.api.model.PokemonService
+import com.example.pokedex_app.api.PokemonService
 import com.example.pokedex_app.api.model.pokemondetails.PokemonDetail
 import com.example.pokedex_app.api.model.pokemondetails.Sprites
 import com.example.pokedex_app.api.model.pokemonlist.PokemonResponse
 import com.example.pokedex_app.api.model.pokemonlist.PokemonResult
-import com.example.pokedex_app.repository.PokemonRepository
+import com.example.pokedex_app.api.model.pokemondetails.PokemonRepository
 import com.example.pokedex_app.viewmodel.MainViewModel
 import com.example.pokedex_app.viewmodel.recyclerview.PokemonRecyclerItem
 import io.mockk.coEvery
